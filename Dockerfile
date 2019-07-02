@@ -13,7 +13,7 @@ RUN apk update && \
     apk add --no-cache libc6-compat curl net-tools libxml2-dev libxslt-dev wget drill vim bash openssh-client && \
     apk-add --no-cache mariadb-dev build-base jpeg-dev postgresql-libs zlib-dev curl-dev python3-dev libressl-dev && \
     apk-add --no-cache openssl util-linux git && \
-    apk add --no-cache --virtual .build-deps gcc linux-headers musl-dev postgresql-dev postgresql-libs
+    apk add --no-cache --virtual .build-deps gcc linux-headers musl-dev postgresql-dev postgresql-libs mariadb-dev
 
 WORKDIR /mnt
 RUN git clone https://github.com/elasticdog/transcrypt.git
