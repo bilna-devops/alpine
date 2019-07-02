@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  jenkins:
+    build:
+      context: /home/ubuntu
+      dockerfile: Dockerfile.ubuntu
+    image: jenkins/jenkins:lts
+    container_name: ubuntu-jenkins
+    restart: always
+    ports:
+      - 50000:50000
+      - 8080:8080 
+    volumes:
+      - jenkins:/var/jenkins_home
+      #- awscrds:/root
+      - /var/run/docker.sock:/var/run/docker.sock
+  caddy:
+    image: riesal/alpine-caddy
+    container_name: alpine-caddy
+    restart: always
+    ports: 
+      - "8445:8445"
+    volumes:
+      - /home/ubuntu/caddy/cert:/root/.caddy
+      - /home/ubuntu/caddy/data:/tmp/
+      - /home/ubuntu/caddy/data/log:/var/log/caddy/
+    command: caddy -conf /tmp/Caddyfile
+volumes:
+  jenkins:
+    driver: local
+  awscrds:
+driver: local
