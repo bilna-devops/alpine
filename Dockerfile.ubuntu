@@ -1,0 +1,15 @@
+FROM jenkins/jenkins:lts
+LABEL maintainer="Muhammad Fahrizal Rahman rizal[at]gmail[dot]com"
+
+USER root
+RUN apt-get update
+RUN apt-get install curl net-tools wget git python-pip sudo -y
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \ 
+    unzip awscli-bundle.zip && \
+    sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+RUN sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+RUN apt-get update &&  apt-get install -y docker-ce && systemctl enable docker
+RUN usermod -aG docker jenkins
+
+USER jenkins
