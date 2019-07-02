@@ -13,8 +13,11 @@ RUN apk update && \
     apk add --no-cache openssl util-linux git && \
     apk add --no-cache --virtual .build-deps gcc linux-headers musl-dev postgresql-dev postgresql-libs mariadb-dev
 
+# Transcrypt Newest Version has bug ==> Make it fixed version
 WORKDIR /mnt
 RUN git clone https://github.com/elasticdog/transcrypt.git
+WORKDIR /mnt/transcrypt
+RUN git checkout dd62d87e0a9bb96e0b7e1ecb576e63de8e85591d
 RUN ln -s /mnt/transcrypt/transcrypt /usr/local/bin/transcrypt
 
 # Add git providers to known_hosts
